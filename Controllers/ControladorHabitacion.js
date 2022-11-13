@@ -1,5 +1,5 @@
 //recibir peticiones,logica de negocio,envio de respuestas
-import { ServicioHabitacion } from "../services/ServicioHabitacion.js"
+import { ServicioHabitacion } from "../Services/ServicioHabitacion.js"
 
 export class ControladorHabitacion{
 

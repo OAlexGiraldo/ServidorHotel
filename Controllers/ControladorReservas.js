@@ -1,5 +1,5 @@
-import { ServicioReservas } from "../services/ServiciosReservas.js"
-import { ServicioHabitacion } from "../services/ServicioHabitacion.js"
+import { ServicioReservas } from "../Services/ServiciosReservas.js"
+import { ServicioHabitacion } from "../Services/ServicioHabitacion.js"
 
 
 export class ControladorReservas{
