@@ -8,7 +8,7 @@ export class ControladorReservas{
 
     async buscarReservas(request,response){
 
-        let objetoServicioReserva = new ServicioReservas.buscarReservas()
+        let objetoServicioReserva = new ServicioReservas()
 
         try{
             response.status(200).json({
@@ -30,7 +30,7 @@ export class ControladorReservas{
         try{
             response.status(200).json({
                 "mensaje":"exito en la reserva "+idreserva,
-                "datos":await objetoServicioReserva.buscarReservaPorId(idreserva),
+                "datos":await objetoServicioReserva.buscarReservaid(idreserva),
             })
         }catch(error){
             response.status(400).json({
@@ -46,7 +46,7 @@ export class ControladorReservas{
         let objetoServicioHabitacion = new ServicioHabitacion()
         console.log(datosreserva);
         try{
-            let datos__habitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosreserva.idHabitacion)
+            let datos__habitacion = await objetoServicioHabitacion.buscarHabitacionesid(datosreserva.idHabitacion)
             let maxPersonas = datos__habitacion.numeroMaximoPersonas
             let numeroPersonas = Number(datosreserva.numeroNinos) + Number(datosreserva.numeroAdultos)
             let entrada = new Date(datosreserva.fechaEntrada)
