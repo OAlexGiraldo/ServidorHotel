@@ -7,126 +7,120 @@ export class ControladorReservas{
     constructor(){}
 
     async buscarReservas(request,response){
-        let objetoServicioReservas=new ServicioReservas()
+
+        let objetoServicioReserva = new ServicioReservas.buscarReservas()
+
         try{
             response.status(200).json({
-                "mensaje":"Exito en la consulta",
-                "datos":await objetoServicioReservas.buscarReservas()
-    
+                "mensaje":"exito en la reserva",
+                "datos":await objetoServicioReserva.buscarReservas()
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la reserva "+error,
+                "datos":null,
             })
         }
-        //response.send("estoy buscando reservaidReservaes desde el controlador")
     }
-
-    async eliminarReserva(request,response){
-        let id= request.params.idReserva
-        let objetoServicioReserva=new ServicioReservas()
-        try{
-          
-          response.status(200).json({
-            "mensaje":"exito eliminando Reserva ",
-            "datos":await objetoServicioReserva.eliminarReservas(id),
-          })  
-        } catch (error) { 
-         response.status(400).json({
-          "mensaje":"ERROR en la consulta "+error,
-          "datos":null,
-        })
-        
-    }
-        }
 
     async buscarReservaPorId(request,response){
-        //viajan por la url de la peticion
-        let id=request.params.idReserva 
-        let objetoServicioReservaid=new ServicioReservas()
+        let idreserva=request.params.idreserva
+        let objetoServicioReserva = new ServicioReservas()
+        //console.log("el id de la reserva es: "+idreserva)
         try{
             response.status(200).json({
-                "mensaje":"Exito en la consulta "+id,
-                "datos":await objetoServicioReservaid.buscarReservaid(id)
-    
+                "mensaje":"exito en la reserva "+idreserva,
+                "datos":await objetoServicioReserva.buscarReservaPorId(idreserva),
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la reserva "+error,
+                "datos":null,
             })
         }
-        //response.send("estoy buscando una reservaidReserva por id desde el controlador")
     }
 
-   async  registrarReserva(request,response){
-        //viajan por el body de la peticion
-        
+    async registrarReserva(request,response){
         let datosreserva=request.body
-        let objetoServicioReserva=new ServicioReservas()
-        let objetoServicioHabitacion=new ServicioHabitacion()
-       
-       
+        let objetoServicioReserva= new ServicioReservas()
+        let objetoServicioHabitacion = new ServicioHabitacion()
+        console.log(datosreserva);
         try{
-            let habitacion= await objetoServicioHabitacion.buscarHabitacionesid(datosreserva.idHabitacion)
-            if(habitacion == null){
+            let datos__habitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosreserva.idHabitacion)
+            let maxPersonas = datos__habitacion.numeroMaximoPersonas
+            let numeroPersonas = Number(datosreserva.numeroNinos) + Number(datosreserva.numeroAdultos)
+            let entrada = new Date(datosreserva.fechaEntrada)
+            let salida = new Date(datosreserva.fechaSalida)
+            const diffInDays = Math.floor((salida - entrada ) / (1000 * 60 * 60 * 24));
+            let costo=0
+            console.log("numero personas ",maxPersonas , numeroPersonas);
+            if(diffInDays >0 ){
+                if(maxPersonas >= numeroPersonas){
+                    costo = Number(datos__habitacion.valorNoche)*Number(diffInDays);
+                    datosreserva.costoReserva=costo
+                    await objetoServicioReserva.agregarReservaEnBD(datosreserva)
+                    response.status(200).json({
+                        "mensaje":"exito registrando la reserva",
+                        "datos":null,
+                    })
+                }else {
+                    response.status(400).json({
+                        "mensaje":"No caben tantas personas",
+                        "datos":null,
+                        "estado":true
+                    })
+                }
+                
+            }else {
                 response.status(400).json({
-                    "mensaje":"La habitacion no existe",
-                    "datos":null
+                    "mensaje":"No se pueden reservar tantos días en esta habitación",
+                    "datos":null,
+                    "estado":true
                 })
-            }else if(datosreserva.numeroAdultos+datosreserva.numeroNiños>habitacion.numeroMaximoPersonas){
-                response.status(400).json({
-                    "mensaje":"No han espacio pa tanta gente solo pueden maximo "+habitacion.numeroMaximoPersonas,
-                    "datos":null
-                })
-            }else{
-                let fecha1 = new Date(datosreserva.fechaEntrada);
-                let fecha2 = new Date(datosreserva.fechaSalida)
-
-                let dias = fecha2.getTime() - fecha1.getTime()
-                let totalNoches = (Math.round(dias/ (1000*60*60/24)))
-                console.log(totalNoches)
-                console.log(habitacion.valorNoche)
-                datosreserva.valorTotal= habitacion.valorNoche * totalNoches
-                console.log(datosreserva.valorTotal)
-
-            }    
+            }
             
-            
-            response.status(200).json({
-                "mensaje":"Se ha realizado la reserva correctamente",
-                "datos":null
-    
-            })
-            await objetoServicioReserva.agregarReservasbd(datosreserva)
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la reserva "+error,
+                "datos":null,
+                "estado":true
             })
         }
-        //response.send("estoy agregando desde el controlador")
     }
 
     async editarReserva(request,response){
-        let id=request.params.idReserva
+        let idr = request.params.idreserva
         let datosReserva=request.body
-        let objetoServicioReserva=new ServicioReservas()
+        let objetoServicioReserva = new ServicioReservas()
         try{
-            await objetoServicioReserva.editarReservas(id,datosReserva)
+            await objetoServicioReserva.editarReserva(idr,datosReserva)
             response.status(200).json({
-                "mensaje":"Exito modificando "+id,
-                "datos":datosReserva
-    
+                "mensaje":"exito editando la reserva "+idr,
+                "datos":null,
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la reserva "+error,
+                "datos":null,
             })
         }
-        //response.send("estoy editando desdeel controlador")
     }
-   
+
+     async eliminarReserva(request,response){
+        let id_del = request.params.idreserva
+        let objReserva =new ServicioReservas()
+        console.log(id_del)
+        try{
+            await objReserva.borrarReserva(id_del)
+            response.status(200).json({
+                "mensaje":"se eliminó correctamente la reserva",
+                "datos":null,
+            })
+        }catch(error){
+            response.status(400).json({
+                "mensaje":"error en la reserva "+error,
+                "datos":null,
+            })
+        }
+    }
 }

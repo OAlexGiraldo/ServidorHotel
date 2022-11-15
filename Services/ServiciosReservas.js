@@ -2,28 +2,29 @@ import { modeloReservas } from "../Models/ModeloReserva.js";
 
 export class ServicioReservas{
 
-    //Aqui van los metodo para cada una de las consutas que queremos realizar 
-    async buscarReservas(){
-        let Reservas=await modeloReservas.find()
-        return Reservas
-    }
+   //Aquí programo métodos, para cada una de las consultas que quiero hacer en bd 
 
-    async buscarReservaid(id){
-        let Reservasid=await modeloReservas.findById(id)
-        return Reservasid
-    }
+   async buscarReservas(){
+    let habitaciones = await modeloReservas.find()
+    return habitaciones 
+}
 
-   async agregarReservasbd(datos){
-        let datoschecked=new modeloReservas(datos)
-        return await datoschecked.save()
-    }
+async buscarReservaPorId(idr){
+    let reserva = await modeloReservas.findById(idr)
+    return reserva
+}
 
-    async editarReservas(id,datos){
+async agregarReservaEnBD(datosreserva){
+    let datosValidados = new modeloReservas(datosreserva)
+    return await datosValidados.save()
+}
 
-        return await modeloReservas.findByIdAndUpdate(id,datos)
-    }
-    async eliminarReservas(id){
-        return await modeloReservas.findByIdAndDelete(id)
-    }
+async editarReserva(id,datos){
 
+    return await modeloReservas.findByIdAndUpdate(id,datos)
+}
+
+async borrarReserva(id){
+    return await modeloReservas.findByIdAndDelete(id)
+}
 }

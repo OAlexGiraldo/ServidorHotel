@@ -2,23 +2,20 @@
 import express from 'express'
 
 import { ControladorHabitacion } from '../Controllers/ControladorHabitacion.js'
-import {ControladorReservas} from'../Controllers/ControladorReservas.js'
-let controladorHabitacion=new ControladorHabitacion() //usando el controlador habitaciones
-let controladorReservas=new ControladorReservas() //usando controlador reservas
-
+let controladorHabitacion=new ControladorHabitacion() //Usando el controlador de las habitaciones
+import { ControladorReservas } from '../Controllers/ControladorReservas.js'
+let controladorReservas=new ControladorReservas() ////Usando el controlador de las reservas
 export let rutasPersonalizadas=express.Router()
 
 rutasPersonalizadas.get('/hotelesPerson/habitaciones',controladorHabitacion.buscarHabitaciones)
 rutasPersonalizadas.get('/hotelesPerson/habitacion/:idHabitacion',controladorHabitacion.buscarHabitacionPorId)
 rutasPersonalizadas.post('/hotelesPerson/habitacion',controladorHabitacion.registrarHabitacion)
 rutasPersonalizadas.put('/hotelesPerson/habitacion/:idHabitacion',controladorHabitacion.editarHabitacion)
-rutasPersonalizadas.delete('/hotelesPerson/habitacion/:idHabitacion',controladorHabitacion.eliminarHabitacion)
 
-//rutas del controlador de reservas
-
+//rutas controlador reserva
 
 rutasPersonalizadas.get('/hotelesPerson/reservas',controladorReservas.buscarReservas)
-rutasPersonalizadas.get('/hotelesPerson/reserva/:idReserva',controladorReservas.buscarReservaPorId)
+rutasPersonalizadas.get('/hotelesPerson/reserva/:idreserva',controladorReservas.buscarReservaPorId)
 rutasPersonalizadas.post('/hotelesPerson/reserva',controladorReservas.registrarReserva)
-rutasPersonalizadas.put('/hotelesPerson/reserva/:idReserva',controladorReservas.editarReserva)
-rutasPersonalizadas.delete('/hotelesPerson/reserva/:idReserva',controladorReservas.eliminarReserva)
+rutasPersonalizadas.put('/hotelesPerson/reserva/:idreserva',controladorReservas.editarReserva)
+rutasPersonalizadas.delete('/hotelesPerson/reserva/:idreserva',controladorReservas.eliminarReserva)

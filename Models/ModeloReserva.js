@@ -9,28 +9,28 @@ const EsquemaReserva= new Schema({
     
     idHabitacion:{
         required:true,
-        type:String,
+        type:String
     },
     fechaEntrada:{
         required:true,
-        type:Date,
+        type:Date
     },
     fechaSalida:{
         required:true,
-        type:Date,
+        type:Date
     },
     numeroAdultos:{
         required:true,
-        type:Number,
+        type:Number
     },
-    numeroNiños:{
+    numeroNinos:{
         required:true,
-        type:Number,
+        type:Number
     },
-    valorTotal:{
+    costoReserva:{
         required:false,
-        type:Number,
-    },
+        type:Number
+    }
   });
 
   export const modeloReservas=mongoose.model('Reservas',EsquemaReserva)

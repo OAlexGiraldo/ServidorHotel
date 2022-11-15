@@ -19,10 +19,7 @@ export class ServicioHabitacion{
     }
 
     async editarHabitacion(id,datos){
-
         return await modeloHabitacion.findByIdAndUpdate(id,datos)
     }
-    async eliminarHabitaciones(id){
-        return await modeloHabitacion.findByIdAndDelete(id)
-    }
+    
 }
