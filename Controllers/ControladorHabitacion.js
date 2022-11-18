@@ -1,112 +1,91 @@
-//recibir peticiones,logica de negocio,envio de respuestas
 import { ServicioHabitacion } from "../Services/ServicioHabitacion.js"
 
-export class ControladorHabitacion{
+export class ControladorHabitacion {
 
-     constructor(){}
+    constructor(){}
 
     async buscarHabitaciones(request,response){
+
+        let objetoServicioHabitacion = new ServicioHabitacion()
+
         try{
-            let objetoServicioHabitacion=new ServicioHabitacion()
             response.status(200).json({
-                "mensaje":"Exito en la consulta",
+                "mensaje":"exito en la consulta",
                 "datos":await objetoServicioHabitacion.buscarHabitaciones()
-    
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la consulta "+error,
+                "datos":null,
             })
         }
-        //response.send("estoy buscando habitaciones desde el controlador")
     }
 
     async buscarHabitacionPorId(request,response){
-        //viajan por la url de la peticion
-        let id=request.params.idHabitacion 
-        let objetoServicioHabitacionid=new ServicioHabitacion()
+        let idhabitacion=request.params.idHabitacion //Recibo id de la peticion 
+        let objetoServicioHabitacion = new ServicioHabitacion()
+        //console.log("el id es: "+datosenviadosenurl)
         try{
             response.status(200).json({
-                "mensaje":"Exito en la consulta "+id,
-                "datos":await objetoServicioHabitacionid.buscarHabitacionesid(id)
-    
+                "mensaje":"exito en la consulta "+idhabitacion,
+                "datos": await objetoServicioHabitacion.buscarHabitacionPorId(idhabitacion)
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
+                "mensaje":"error en la consulta "+error,
                 "datos":null
             })
         }
-        //response.send("estoy buscando una habitacion por id desde el controlador")
     }
 
     async registrarHabitacion(request,response){
-        //viajan por el bode de la peticion
-        let datoshabitacion=request.body
+        let datoshabitacion=request.body //Obtengo datos del body 
         let objetoServicioHabitacion=new ServicioHabitacion()
-
+        
         try{
-            console.log(datoshabitacion.numeroMaximoPersonas)
+            //console.log(datoshabitacion.numeroMaximoPersonas),, se utiliza para probar 
             if(datoshabitacion.numeroMaximoPersonas<8){
-                await objetoServicioHabitacion.agregarHabitacionbd(datoshabitacion)
+
+                await objetoServicioHabitacion.agregarHabitacionEnBD(datoshabitacion)
+
                 response.status(200).json({
-                    "mensaje":"Exito agregando",
-                    "datos":null
+                "mensaje":"exito registrando habitacion",
+                "datos":null,
                 })
 
             }else{
                 response.status(400).json({
-                    "mensaje":"No caba tante chinche",
-                    "datos":null
-            })
-            
-            
+                    "mensaje":"Solo se permiten 8 personas en esta habitación",
+                    "datos":null,
+                    })
             }
+            
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la consulta "+error,
+                "datos":null,
             })
         }
-        //response.send("estoy agregando desde el controlador")
     }
 
     async editarHabitacion(request,response){
-        let id=request.params.idHabitacion
-        let datoshabitacion=request.body
-        let objetoServicioHabitacion=new ServicioHabitacion()
-        try{
-            await objetoServicioHabitacion.editarHabitacion(id,datoshabitacion)
-            response.status(200).json({
-                "mensaje":"Exito modificando "+id,
-                "datos":null
-    
-            })
-        }catch(error){
-            response.status(400).json({
-                "mensaje":"Error en la consulta"+error,
-                "datos":null
-            })
-        }
-        //response.send("estoy editando desdeel controlador")
-    }
-   async eliminarHabitacion(request,response){
         let id = request.params.idHabitacion
-        let objetoServicioHabitacion=new ServicioHabitacion()
+        let datosEditar=request.body
+
+        let objetoServicioHabitacion =new ServicioHabitacion()
 
         try{
-            
-                response.status(200).json({
-                "mensaje":"exito en eliminando la habitacion" +id,
-                "datos":await objetoServicioHabitacion.eliminarHabitaciones(id),
+            await objetoServicioHabitacion.editarHabitacion(id,datosEditar)
+            response.status(200).json({
+                "mensaje":"exito editando la habitacion "+id,
+                "datos":null,
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"ERROR en la consulta " +error,
+                "mensaje":"error en la consulta "+error,
                 "datos":null,
-
             })
         }
-  }
+    }
+
 }

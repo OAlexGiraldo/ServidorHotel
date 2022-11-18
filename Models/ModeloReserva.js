@@ -1,12 +1,18 @@
-//IdHabitacion,Fechaentrada,Fechasalida,NumeroAdultos,,Numeronino,precio
+//idHabitacion
+//fechaEntrada
+//fechaSalida
+//numeroAdultos
+//numeroNinos
+//costoReserva
 
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-//ESQUEMA DE DATOS ES UN ESTANDAR DONDE APARECEN SOLO LOS DATOS CON LOS QUE VA A TRABAJAR EL API
-const Schema = mongoose.Schema
+//Esquema de datos es un estándar donde aparecen solo los datos
+//con los datos que el API va trabajar 
+const Schema = mongoose.Schema;
 
-const EsquemaReserva= new Schema({
-    
+const EsquemaReserva = new Schema({
+
     idHabitacion:{
         required:true,
         type:String
@@ -31,6 +37,7 @@ const EsquemaReserva= new Schema({
         required:false,
         type:Number
     }
-  });
+    
+});
 
-  export const modeloReservas=mongoose.model('Reservas',EsquemaReserva)
+export const modeloReserva = mongoose.model('reserva',EsquemaReserva)

@@ -1,30 +1,32 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-//ESQUEMA DE DATOS ES UN ESTANDAR DONDE APARECEN SOLO LOS DATOS CON LOS QUE VA A TRABAJAR EL API
-const Schema = mongoose.Schema
+//Esquema de datos es un estándar donde aparecen solo los datos
+//con los datos que el API va trabajar 
+const Schema = mongoose.Schema;
 
 const EsquemaHabitacion = new Schema({
-    
+
     nombre:{
         required:true,
-        type:String,
+        type:String
     },
     valorNoche:{
         required:true,
-        type:Number,
+        type:Number
     },
     descripcion:{
         required:true,
-        type:String,
+        type:String
     },
-    Fotografia:{
+    fotografias:{
         required:true,
-        type:[String],
+        type:[String]
     },
     numeroMaximoPersonas:{
         required:true,
-        type:Number,
-    },
-  });
+        type:Number
+    }
+    
+});
 
-  export const modeloHabitacion=mongoose.model('Habitaciones',EsquemaHabitacion)
+export const modeloHabitacion=mongoose.model('habitaciones',EsquemaHabitacion)

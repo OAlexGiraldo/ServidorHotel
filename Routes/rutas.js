@@ -1,6 +1,5 @@
-//ESTE ARCHIVO ESTABLECE LAS RUTAS O ENDPOINT DE CADA SERVICIO OFRECIDO POR MI API
-import express from 'express'
-
+//Este archivo establece las rutas o endpoints de cada servicio ofrecido por mi API 
+import express from 'express' //Se importa express
 import { ControladorHabitacion } from '../Controllers/ControladorHabitacion.js'
 let controladorHabitacion=new ControladorHabitacion() //Usando el controlador de las habitaciones
 import { ControladorReservas } from '../Controllers/ControladorReservas.js'
@@ -12,7 +11,7 @@ rutasPersonalizadas.get('/hotelesPerson/habitacion/:idHabitacion',controladorHab
 rutasPersonalizadas.post('/hotelesPerson/habitacion',controladorHabitacion.registrarHabitacion)
 rutasPersonalizadas.put('/hotelesPerson/habitacion/:idHabitacion',controladorHabitacion.editarHabitacion)
 
-//rutas controlador reserva
+
 
 rutasPersonalizadas.get('/hotelesPerson/reservas',controladorReservas.buscarReservas)
 rutasPersonalizadas.get('/hotelesPerson/reserva/:idreserva',controladorReservas.buscarReservaPorId)

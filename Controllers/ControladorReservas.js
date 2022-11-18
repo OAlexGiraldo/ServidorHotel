@@ -1,14 +1,14 @@
-import { ServicioReservas } from "../Services/ServiciosReservas.js"
+import { ServicioReserva} from "../Services/ServiciosReservas.js"
 import { ServicioHabitacion } from "../Services/ServicioHabitacion.js"
 
 
-export class ControladorReservas{
+export class ControladorReservas {
 
     constructor(){}
 
     async buscarReservas(request,response){
 
-        let objetoServicioReserva = new ServicioReservas()
+        let objetoServicioReserva = new ServicioReserva()
 
         try{
             response.status(200).json({
@@ -25,12 +25,12 @@ export class ControladorReservas{
 
     async buscarReservaPorId(request,response){
         let idreserva=request.params.idreserva
-        let objetoServicioReserva = new ServicioReservas()
+        let objetoServicioReserva = new ServicioReserva()
         //console.log("el id de la reserva es: "+idreserva)
         try{
             response.status(200).json({
                 "mensaje":"exito en la reserva "+idreserva,
-                "datos":await objetoServicioReserva.buscarReservaid(idreserva),
+                "datos":await objetoServicioReserva.buscarReservaPorId(idreserva),
             })
         }catch(error){
             response.status(400).json({
@@ -42,11 +42,11 @@ export class ControladorReservas{
 
     async registrarReserva(request,response){
         let datosreserva=request.body
-        let objetoServicioReserva= new ServicioReservas()
+        let objetoServicioReserva= new ServicioReserva()
         let objetoServicioHabitacion = new ServicioHabitacion()
         console.log(datosreserva);
         try{
-            let datos__habitacion = await objetoServicioHabitacion.buscarHabitacionesid(datosreserva.idHabitacion)
+            let datos__habitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosreserva.idHabitacion)
             let maxPersonas = datos__habitacion.numeroMaximoPersonas
             let numeroPersonas = Number(datosreserva.numeroNinos) + Number(datosreserva.numeroAdultos)
             let entrada = new Date(datosreserva.fechaEntrada)
@@ -91,7 +91,7 @@ export class ControladorReservas{
     async editarReserva(request,response){
         let idr = request.params.idreserva
         let datosReserva=request.body
-        let objetoServicioReserva = new ServicioReservas()
+        let objetoServicioReserva = new ServicioReserva()
         try{
             await objetoServicioReserva.editarReserva(idr,datosReserva)
             response.status(200).json({
@@ -108,7 +108,7 @@ export class ControladorReservas{
 
      async eliminarReserva(request,response){
         let id_del = request.params.idreserva
-        let objReserva =new ServicioReservas()
+        let objReserva =new ServicioReserva()
         console.log(id_del)
         try{
             await objReserva.borrarReserva(id_del)

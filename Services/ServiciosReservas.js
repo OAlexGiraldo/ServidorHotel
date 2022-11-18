@@ -1,30 +1,31 @@
-import { modeloReservas } from "../Models/ModeloReserva.js";
+import {modeloReserva } from '../Models/ModeloReserva.js'
 
-export class ServicioReservas{
+export class ServicioReserva{
 
-   //Aquí programo métodos, para cada una de las consultas que quiero hacer en bd 
+    //Aquí programo métodos, para cada una de las consultas que quiero hacer en bd 
 
-   async buscarReservas(){
-    let habitaciones = await modeloReservas.find()
-    return habitaciones 
-}
+    async buscarReservas(){
+        let habitaciones = await modeloReserva.find()
+        return habitaciones 
+    }
 
-async buscarReservaPorId(idr){
-    let reserva = await modeloReservas.findById(idr)
-    return reserva
-}
+    async buscarReservaPorId(idr){
+        let reserva = await modeloReserva.findById(idr)
+        return reserva
+    }
 
-async agregarReservaEnBD(datosreserva){
-    let datosValidados = new modeloReservas(datosreserva)
-    return await datosValidados.save()
-}
+    async agregarReservaEnBD(datosreserva){
+        let datosValidados = new modeloReserva(datosreserva)
+        return await datosValidados.save()
+    }
 
-async editarReserva(id,datos){
+    async editarReserva(id,datos){
 
-    return await modeloReservas.findByIdAndUpdate(id,datos)
-}
+        return await modeloReserva.findByIdAndUpdate(id,datos)
+    }
 
-async borrarReserva(id){
-    return await modeloReservas.findByIdAndDelete(id)
-}
+    async borrarReserva(id){
+        return await modeloReserva.findByIdAndDelete(id)
+    }
+
 }

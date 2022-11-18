@@ -1,25 +1,27 @@
-import { modeloHabitacion } from "../Models/ModelosHabitacion.js";
+import {modeloHabitacion} from '../Models/ModelosHabitacion.js'
 
 export class ServicioHabitacion{
 
-    //Aqui van los metodo para cada una de las consutas que queremos realizar 
+    //Aquí programo métodos, para cada una de las consultas que quiero hacer en bd 
+
     async buscarHabitaciones(){
-        let habitaciones=await modeloHabitacion.find()
-        return habitaciones
+        let habitaciones = await modeloHabitacion.find()
+        return habitaciones 
     }
 
-    async buscarHabitacionesid(id){
-        let habitacionid=await modeloHabitacion.findById(id)
-        return habitacionid
+    async buscarHabitacionPorId(id){
+        let habitacion = await modeloHabitacion.findById(id)
+        return habitacion
     }
 
-   async agregarHabitacionbd(datos){
-        let datoschecked=new modeloHabitacion(datos)
-        return await datoschecked.save()
+    async agregarHabitacionEnBD(datos){
+        let datosValidados = new modeloHabitacion(datos)
+        return await datosValidados.save()
     }
 
     async editarHabitacion(id,datos){
+
         return await modeloHabitacion.findByIdAndUpdate(id,datos)
     }
-    
+
 }
