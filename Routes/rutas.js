@@ -1,20 +1,27 @@
-//Este archivo establece las rutas o endpoints de cada servicio ofrecido por mi API 
-import express from 'express' //Se importa express
+//archivo de enrutamiento, rutas separadas para personalziar los archivos
+//los datos que se llevan por URL ojala 1 y no datos sensibles body
+//se mandaN DATOS que se llaman parametro como usuarios
+
+import express from 'express'; // esta descargado de forma global
+
 import { ControladorHabitacion } from '../Controllers/ControladorHabitacion.js'
-let controladorHabitacion=new ControladorHabitacion() //Usando el controlador de las habitaciones
-import { ControladorReservas } from '../Controllers/ControladorReservas.js'
-let controladorReservas=new ControladorReservas() ////Usando el controlador de las reservas
-export let rutasPersonalizadas=express.Router()
+import { ControladorReservas } from '../Controllers/ControladorReservas.js';
 
-rutasPersonalizadas.get('/hotelesPerson/habitaciones',controladorHabitacion.buscarHabitaciones)
-rutasPersonalizadas.get('/hotelesPerson/habitacion/:idHabitacion',controladorHabitacion.buscarHabitacionPorId)
-rutasPersonalizadas.post('/hotelesPerson/habitacion',controladorHabitacion.registrarHabitacion)
-rutasPersonalizadas.put('/hotelesPerson/habitacion/:idHabitacion',controladorHabitacion.editarHabitacion)
+//como es una clase entonces se debe usar
+let controladorHabitacion = new ControladorHabitacion(); // usando el controlador
+let controladorReserva = new ControladorReservas(); // usando el controlador
 
+//separa la ruta de peticion y respuesta por diferente lado
+export let rutasPersonalizadas = express.Router();
 
+rutasPersonalizadas.get('/hotelesPerson/habitaciones', controladorHabitacion.buscarHabitaciones);
+rutasPersonalizadas.get('/hotelesPerson/habitacion/:idHabitacion', controladorHabitacion.buscarHabitacionPorId);
+rutasPersonalizadas.post('/hotelesPerson/habitacion', controladorHabitacion.registrarHabitacion);
+rutasPersonalizadas.put('/hotelesPerson/habitacion/:idHabitacion', controladorHabitacion.editarHabitacion);
+rutasPersonalizadas.delete('/hotelesPerson/habitacion/:idHabitacion', controladorHabitacion.eliminaHabitacion );
 
-rutasPersonalizadas.get('/hotelesPerson/reservas',controladorReservas.buscarReservas)
-rutasPersonalizadas.get('/hotelesPerson/reserva/:idreserva',controladorReservas.buscarReservaPorId)
-rutasPersonalizadas.post('/hotelesPerson/reserva',controladorReservas.registrarReserva)
-rutasPersonalizadas.put('/hotelesPerson/reserva/:idreserva',controladorReservas.editarReserva)
-rutasPersonalizadas.delete('/hotelesPerson/reserva/:idreserva',controladorReservas.eliminarReserva)
+rutasPersonalizadas.get('/hotelesPerson/reservas', controladorReserva.buscarReservas);
+rutasPersonalizadas.get('/hotelesPerson/reserva/:idReserva', controladorReserva.buscarReservaPorId);
+rutasPersonalizadas.post('/hotelesPerson/reserva', controladorReserva.registrarReserva);
+rutasPersonalizadas.put('/hotelesPerson/reserva/:idReserva', controladorReserva.editarReserva);
+rutasPersonalizadas.delete('/hotelesPerson/reserva/:idReserva', controladorReserva.eliminaReserva);
